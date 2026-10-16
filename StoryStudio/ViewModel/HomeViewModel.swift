@@ -1,28 +1,43 @@
+import SwiftUI
 import Combine
 
 @MainActor
 final class HomeViewModel: ObservableObject {
     @Published var selectedCategory = "All"
-    @Published var templates: [StoryTemplate] = StoryTemplate.samples.map { template in
-        var mutableTemplate = template
-        return mutableTemplate
-    }
+    @Published var templates: [StoryTemplate] = StoryTemplate.samples
+    @ObservedObject var creationsManager = CreationsManager.shared
 
     let categories = [
         "All",
         "Lifestyle",
         "Quotes",
         "Announcements",
-        "Promotions"
+        "Promotions",
+        "Tech"
     ]
 
     var filteredTemplates: [StoryTemplate] {
-        guard selectedCategory != "All" else {
-            return templates
+        let baseList: [StoryTemplate]
+        if selectedCategory == "All" {
+            baseList = templates
+        } else {
+            baseList = templates.filter { $0.category == selectedCategory }
         }
 
-        return templates.filter {
-            $0.category == selectedCategory
+        // Return with synced favorite status from CreationsManager
+        return baseList.map { template in
+            var t = template
+            t.isFavorite = creationsManager.isFavorite(templateID: template.id)
+            return t
         }
+    }
+
+    func isFavorite(template: StoryTemplate) -> Bool {
+        creationsManager.isFavorite(templateID: template.id)
+    }
+
+    func toggleFavorite(template: StoryTemplate) {
+        creationsManager.toggleFavorite(templateID: template.id)
+        objectWillChange.send()
     }
 }

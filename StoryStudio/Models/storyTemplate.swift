@@ -46,7 +46,7 @@ struct StoryTemplate: Identifiable {
         ),
         StoryTemplate(
             id: "midnight",
-            name: "Midnight",
+            name: "Midnight Spark",
             category: "Promotions",
             colors: [.black, .purple],
             title: "SOMETHING\nGOOD IS HERE",
@@ -56,7 +56,7 @@ struct StoryTemplate: Identifiable {
         ),
         StoryTemplate(
             id: "forest",
-            name: "Forest Green",
+            name: "Forest Mist",
             category: "Lifestyle",
             colors: [.green, .mint, .teal],
             title: "GROW\nEVERYDAY",
@@ -66,17 +66,17 @@ struct StoryTemplate: Identifiable {
         ),
         StoryTemplate(
             id: "rose",
-            name: "Rose Gold",
+            name: "Rose Quartz",
             category: "Promotions",
             colors: [.pink, .red, .orange],
             title: "LIVE YOUR\nBEST LIFE",
-            subtitle: "Embrace every moment.",
+            subtitle: "Embrace every vibrant moment.",
             sticker: "♡",
             isFavorite: false
         ),
         StoryTemplate(
             id: "aurora",
-            name: "Aurora",
+            name: "Nordic Aurora",
             category: "Quotes",
             colors: [.purple, .blue, .cyan],
             title: "DREAM\nBIG",
@@ -93,7 +93,59 @@ struct StoryTemplate: Identifiable {
             subtitle: "Capture the golden moments.",
             sticker: "✦",
             isFavorite: false
+        ),
+        StoryTemplate(
+            id: "cyberpunk",
+            name: "Cyber Neon",
+            category: "Tech",
+            colors: [
+                Color(red: 0.08, green: 0.05, blue: 0.2),
+                Color(red: 0.6, green: 0.1, blue: 0.9),
+                Color(red: 0.1, green: 0.9, blue: 0.8)
+            ],
+            title: "FUTURE IS\nLOADING...",
+            subtitle: "Next-gen creative drops tonight.",
+            sticker: "⚡",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "vintage_paper",
+            name: "Vintage Editorial",
+            category: "Quotes",
+            colors: [
+                Color(red: 0.25, green: 0.22, blue: 0.2),
+                Color(red: 0.45, green: 0.38, blue: 0.32)
+            ],
+            title: "THE POWER OF\nSTILLNESS",
+            subtitle: "In silence, answers find you.",
+            sticker: "❦",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "flash_drop",
+            name: "Flash Drop",
+            category: "Promotions",
+            colors: [
+                Color(red: 0.98, green: 0.2, blue: 0.35),
+                Color(red: 0.5, green: 0.0, blue: 0.4)
+            ],
+            title: "LIMITED\nEDITION",
+            subtitle: "Available for the next 24 hours.",
+            sticker: "SALE",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "zen_wellness",
+            name: "Zen Clarity",
+            category: "Lifestyle",
+            colors: [
+                Color(red: 0.82, green: 0.88, blue: 0.85),
+                Color(red: 0.65, green: 0.78, blue: 0.75)
+            ],
+            title: "INHALE PEACE\nEXHALE CHAOS",
+            subtitle: "A mindful checkpoint for your day.",
+            sticker: "𑁍",
+            isFavorite: false
         )
     ]
 }
-

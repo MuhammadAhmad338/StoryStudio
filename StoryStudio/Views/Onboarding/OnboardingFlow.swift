@@ -46,17 +46,7 @@ struct OnboardingFlow: View {
                     }
                 }
             case .complete:
-                NavigationStack {
-                    HomeView(selectedTemplate: $selectedTemplate)
-                        .navigationDestination(isPresented: Binding(
-                            get: { selectedTemplate != nil },
-                            set: { if !$0 { selectedTemplate = nil } }
-                        )) {
-                            if let template = selectedTemplate {
-                                StoryEditorView(template: template)
-                            }
-                        }
-                }
+                MainTabView()
             }
         }
     }

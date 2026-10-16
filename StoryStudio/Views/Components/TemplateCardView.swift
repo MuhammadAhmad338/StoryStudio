@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TemplateCardView: View {
     let template: StoryTemplate
+    var onToggleFavorite: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -14,21 +15,29 @@ struct TemplateCardView: View {
                 )
                 .aspectRatio(9.0 / 16.0, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
 
-                Image(systemName: template.isFavorite ? "heart.fill" : "heart")
-                    .font(.system(size: 20))
-                    .foregroundStyle(template.isFavorite ? .red : .white)
-                    .padding(8)
-                    .background(
-                        Circle()
-                            .fill(Color.black.opacity(0.3))
-                    )
-                    .padding(8)
+                Button {
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                    onToggleFavorite?()
+                } label: {
+                    Image(systemName: template.isFavorite ? "heart.fill" : "heart")
+                        .font(.system(size: 17))
+                        .foregroundStyle(template.isFavorite ? .red : .white)
+                        .padding(8)
+                        .background(
+                            Circle()
+                                .fill(Color.black.opacity(0.45))
+                        )
+                }
+                .padding(8)
             }
 
             Text(template.name)
                 .font(.subheadline.bold())
                 .foregroundStyle(.primary)
+                .lineLimit(1)
 
             Text(template.category)
                 .font(.caption)
@@ -36,10 +45,3 @@ struct TemplateCardView: View {
         }
     }
 }
-//
-//  TemplateCardView.swift
-//  StoryStudio
-//
-//  Created by Muhammad Ahmad on 2026-10-14.
-//
-

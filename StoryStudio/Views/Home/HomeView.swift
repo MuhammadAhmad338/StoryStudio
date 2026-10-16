@@ -2,10 +2,12 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
+    @ObservedObject private var creationsManager = CreationsManager.shared
     @Binding var selectedTemplate: StoryTemplate?
     @State private var searchText = ""
     @State private var showFavoritesOnly = false
     @State private var isDarkMode = false
+    @State private var openBlankCanvas = false
 
     init(selectedTemplate: Binding<StoryTemplate?> = .constant(nil)) {
         self._selectedTemplate = selectedTemplate
@@ -16,23 +18,52 @@ struct HomeView: View {
         GridItem(.flexible(), spacing: 14)
     ]
 
+    var displayedTemplates: [StoryTemplate] {
+        viewModel.filteredTemplates.filter { template in
+            (searchText.isEmpty || template.name.localizedCaseInsensitiveContains(searchText) || template.title.localizedCaseInsensitiveContains(searchText)) &&
+            (!showFavoritesOnly || template.isFavorite)
+        }
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 header
 
-                Text("Create something beautiful.")
-                    .font(.googleSansFlexLargeTitle)
+                // Tagline & Quick Action
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Create something beautiful.")
+                            .font(.title2.bold())
 
-                Text("Choose a template and make it yours.")
-                    .font(.googleSansFlexBody)
-                    .foregroundStyle(.secondary)
+                        Text("Choose a template or craft from blank.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Spacer()
+
+                    Button {
+                        openBlankCanvas = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Blank")
+                        }
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(Color.purple)
+                        .clipShape(Capsule())
+                    }
+                }
 
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundStyle(.secondary)
-                    TextField("Search templates...", text: $searchText)
+                    TextField("Search templates, quotes, styles...", text: $searchText)
                         .textFieldStyle(.plain)
                     if !searchText.isEmpty {
                         Button {
@@ -45,19 +76,25 @@ struct HomeView: View {
                 }
                 .padding(12)
                 .background(Color.secondary.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
 
                 // Filter Options
                 HStack {
                     Button {
-                        showFavoritesOnly.toggle()
+                        withAnimation {
+                            showFavoritesOnly.toggle()
+                        }
                     } label: {
                         HStack(spacing: 6) {
                             Image(systemName: showFavoritesOnly ? "heart.fill" : "heart")
-                            Text("Favorites")
+                            Text("Favorites (\(creationsManager.favoriteTemplateIDs.count))")
                         }
-                        .font(.googleSansFlex(size: 14, weight: .medium))
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
                         .foregroundStyle(showFavoritesOnly ? .purple : .primary)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(showFavoritesOnly ? Color.purple.opacity(0.12) : Color.clear)
+                        .clipShape(Capsule())
                     }
 
                     Spacer()
@@ -66,39 +103,73 @@ struct HomeView: View {
                         isDarkMode.toggle()
                     } label: {
                         Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                            .font(.system(size: 16))
                             .foregroundStyle(.primary)
+                            .padding(8)
+                            .background(Color.secondary.opacity(0.12))
+                            .clipShape(Circle())
                     }
                 }
-                .padding(.horizontal, 4)
+                .padding(.horizontal, 2)
 
                 categoryPicker
 
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(viewModel.filteredTemplates.filter { template in
-                        (searchText.isEmpty || template.name.localizedCaseInsensitiveContains(searchText)) &&
-                        (!showFavoritesOnly || template.isFavorite)
-                    }) { template in
-                        Button {
-                            selectedTemplate = template
-                        } label: {
-                            TemplateCardView(template: template)
+                // Template Grid
+                if displayedTemplates.isEmpty {
+                    VStack(spacing: 12) {
+                        Image(systemName: "sparkle.magnifyingglass")
+                            .font(.system(size: 40))
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 24)
+
+                        Text("No templates match your search")
+                            .font(.headline)
+
+                        Button("Reset Filters") {
+                            searchText = ""
+                            showFavoritesOnly = false
+                            viewModel.selectedCategory = "All"
                         }
-                        .buttonStyle(.plain)
-                        .contextMenu {
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.purple)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 20)
+                } else {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(displayedTemplates) { template in
                             Button {
-                                toggleFavorite(template)
+                                selectedTemplate = template
                             } label: {
-                                Label(template.isFavorite ? "Remove from Favorites" : "Add to Favorites",
-                                      systemImage: template.isFavorite ? "heart.slash" : "heart")
+                                TemplateCardView(template: template) {
+                                    viewModel.toggleFavorite(template: template)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            .contextMenu {
+                                Button {
+                                    selectedTemplate = template
+                                } label: {
+                                    Label("Open in Editor", systemImage: "paintbrush")
+                                }
+
+                                Button {
+                                    viewModel.toggleFavorite(template: template)
+                                } label: {
+                                    Label(
+                                        template.isFavorite ? "Remove from Favorites" : "Add to Favorites",
+                                        systemImage: template.isFavorite ? "heart.slash" : "heart"
+                                    )
+                                }
                             }
                         }
                     }
                 }
 
-                // Stats Section
+                // Dynamic Live Stats Section
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Your Stats")
-                        .font(.googleSansFlex(size: 20, weight: .semibold))
+                    Text("Your Studio Stats")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
                         .padding(.top, 10)
 
                     HStack(spacing: 12) {
@@ -111,38 +182,34 @@ struct HomeView: View {
                         StatCard(
                             icon: "heart.fill",
                             title: "Favorites",
-                            value: "\(viewModel.templates.filter { $0.isFavorite }.count)"
+                            value: "\(creationsManager.favoriteTemplateIDs.count)"
                         )
 
                         StatCard(
-                            icon: "checkmark.circle.fill",
-                            title: "Created",
-                            value: "0"
+                            icon: "folder.fill",
+                            title: "Saved",
+                            value: "\(creationsManager.savedStories.count)"
                         )
                     }
                 }
             }
             .padding(20)
         }
-        #if os(iOS)
         .background(Color(uiColor: .systemGroupedBackground))
-        #else
-        .background(Color(NSColor.controlBackgroundColor))
-        #endif
-        #if os(iOS)
-        .toolbar(.hidden, for: .navigationBar)
-        #endif
+        .navigationDestination(isPresented: $openBlankCanvas) {
+            StoryEditorView()
+        }
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 
     private var header: some View {
         HStack(spacing: 10) {
             Image(systemName: "sparkles.rectangle.stack.fill")
-                .font(.title)
+                .font(.title2)
                 .foregroundStyle(.purple)
 
             Text("StoryStudio")
-                .font(.googleSansFlexTitle2)
+                .font(.title2.bold())
 
             Spacer()
         }
@@ -156,13 +223,13 @@ struct HomeView: View {
                         viewModel.selectedCategory = category
                     } label: {
                         Text(category)
-                            .font(.googleSansFlexSubheadline)
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
                             .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 8)
                             .background(
                                 viewModel.selectedCategory == category
                                     ? Color.purple
-                                    : Color.secondary.opacity(0.2)
+                                    : Color.secondary.opacity(0.12)
                             )
                             .foregroundStyle(
                                 viewModel.selectedCategory == category
@@ -176,12 +243,6 @@ struct HomeView: View {
             }
         }
     }
-
-    private func toggleFavorite(_ template: StoryTemplate) {
-        if let index = viewModel.templates.firstIndex(where: { $0.id == template.id }) {
-            viewModel.templates[index].isFavorite.toggle()
-        }
-    }
 }
 
 struct StatCard: View {
@@ -190,24 +251,25 @@ struct StatCard: View {
     let value: String
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Image(systemName: icon)
-                .font(.system(size: 28))
+                .font(.system(size: 24))
                 .foregroundStyle(.purple)
-                .frame(width: 50, height: 50)
-                .background(Color.purple.opacity(0.1))
+                .frame(width: 44, height: 44)
+                .background(Color.purple.opacity(0.12))
                 .clipShape(Circle())
 
             Text(value)
-                .font(.googleSansFlex(size: 20, weight: .bold))
+                .font(.title3.bold())
 
             Text(title)
-                .font(.googleSansFlex(size: 12))
+                .font(.caption)
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(16)
-        .background(Color.secondary.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.vertical, 14)
+        .padding(.horizontal, 8)
+        .background(Color(uiColor: .secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }
