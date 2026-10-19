@@ -16,6 +16,7 @@ final class StoryEditorViewModel: ObservableObject {
 
     // Style & Canvas state
     @Published var backgroundIndex = 0
+    @Published var customGradientColors: [Color]?
     @Published var backgroundImage: UIImage? = nil
     @Published var selectedPhotoItem: PhotosPickerItem? = nil {
         didSet {
@@ -67,6 +68,7 @@ final class StoryEditorViewModel: ObservableObject {
             self.backgroundIndex = idx
         } else {
             self.backgroundIndex = 0
+            self.customGradientColors = template.colors
         }
     }
 
@@ -100,6 +102,7 @@ final class StoryEditorViewModel: ObservableObject {
             self.backgroundIndex = match
         } else {
             self.backgroundIndex = 0
+            self.customGradientColors = savedStory.colors
         }
     }
 
@@ -109,17 +112,49 @@ final class StoryEditorViewModel: ObservableObject {
         self.currentStoryID = UUID()
         self.title = "NEW STORY"
         self.subtitle = "Tap to edit your inspirational story."
-        self.sticker = "✦"
+        self.sticker = ""
         self.brandName = "STORYSTUDIO"
         self.handle = "@YOURHANDLE"
         self.backgroundIndex = 0
     }
 
     var currentBackgroundColors: [Color] {
+        if let customGradientColors {
+            return customGradientColors
+        }
         if backgrounds.indices.contains(backgroundIndex) {
             return backgrounds[backgroundIndex]
         }
         return [.purple, .indigo]
+    }
+
+    func selectBackgroundPalette(at index: Int) {
+        guard backgrounds.indices.contains(index) else { return }
+        backgroundImage = nil
+        customGradientColors = nil
+        backgroundIndex = index
+    }
+
+    func updateGradientColor(at index: Int, to color: Color) {
+        var colors = currentBackgroundColors
+        guard colors.indices.contains(index) else { return }
+        colors[index] = color
+        customGradientColors = colors
+        backgroundImage = nil
+    }
+
+    func addGradientColor() {
+        guard currentBackgroundColors.count < 5 else { return }
+        customGradientColors = currentBackgroundColors + [currentBackgroundColors.last ?? .purple]
+        backgroundImage = nil
+    }
+
+    func removeGradientColor(at index: Int) {
+        var colors = currentBackgroundColors
+        guard colors.count > 2, colors.indices.contains(index) else { return }
+        colors.remove(at: index)
+        customGradientColors = colors
+        backgroundImage = nil
     }
 
     // MARK: - Photos Loading

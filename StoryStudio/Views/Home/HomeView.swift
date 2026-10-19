@@ -34,10 +34,10 @@ struct HomeView: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Create something beautiful.")
-                            .font(.title2.bold())
+                            .font(.googleSansFlex(.title2, weight: .bold))
 
                         Text("Choose a template or craft from blank.")
-                            .font(.subheadline)
+                            .font(.googleSansFlex(.subheadline))
                             .foregroundStyle(.secondary)
                     }
 
@@ -50,7 +50,7 @@ struct HomeView: View {
                             Image(systemName: "plus.circle.fill")
                             Text("Blank")
                         }
-                        .font(.subheadline.bold())
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
@@ -89,7 +89,7 @@ struct HomeView: View {
                             Image(systemName: showFavoritesOnly ? "heart.fill" : "heart")
                             Text("Favorites (\(creationsManager.favoriteTemplateIDs.count))")
                         }
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .font(.googleSansFlex(size: 14, weight: .medium))
                         .foregroundStyle(showFavoritesOnly ? .purple : .primary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
@@ -123,14 +123,14 @@ struct HomeView: View {
                             .padding(.top, 24)
 
                         Text("No templates match your search")
-                            .font(.headline)
+                            .font(.googleSansFlex(.headline))
 
                         Button("Reset Filters") {
                             searchText = ""
                             showFavoritesOnly = false
                             viewModel.selectedCategory = "All"
                         }
-                        .font(.subheadline.bold())
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
                         .foregroundStyle(.purple)
                     }
                     .frame(maxWidth: .infinity)
@@ -169,7 +169,7 @@ struct HomeView: View {
                 // Dynamic Live Stats Section
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Your Studio Stats")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .font(.googleSansFlex(size: 18, weight: .bold))
                         .padding(.top, 10)
 
                     HStack(spacing: 12) {
@@ -205,11 +205,11 @@ struct HomeView: View {
     private var header: some View {
         HStack(spacing: 10) {
             Image(systemName: "sparkles.rectangle.stack.fill")
-                .font(.title2)
+                .font(.googleSansFlex(.title2))
                 .foregroundStyle(.purple)
 
             Text("StoryStudio")
-                .font(.title2.bold())
+                .font(.googleSansFlex(.title2, weight: .bold))
 
             Spacer()
         }
@@ -223,7 +223,7 @@ struct HomeView: View {
                         viewModel.selectedCategory = category
                     } label: {
                         Text(category)
-                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                            .font(.googleSansFlex(size: 14, weight: .medium))
                             .padding(.horizontal, 14)
                             .padding(.vertical, 8)
                             .background(
@@ -260,10 +260,10 @@ struct StatCard: View {
                 .clipShape(Circle())
 
             Text(value)
-                .font(.title3.bold())
+                .font(.googleSansFlex(.title3, weight: .bold))
 
             Text(title)
-                .font(.caption)
+                .font(.googleSansFlex(.caption))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)

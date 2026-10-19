@@ -163,8 +163,10 @@ struct StoryCanvasView: View {
 
                         Spacer()
 
-                        Image(systemName: "sparkles")
-                            .font(.system(size: max(11, w * 0.035)))
+                        if !sticker.isEmpty {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: max(11, w * 0.035)))
+                        }
                     }
 
                     Spacer()

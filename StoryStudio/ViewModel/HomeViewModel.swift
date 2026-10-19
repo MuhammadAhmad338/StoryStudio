@@ -13,7 +13,12 @@ final class HomeViewModel: ObservableObject {
         "Quotes",
         "Announcements",
         "Promotions",
-        "Tech"
+        "Tech",
+        "Food & Drink",
+        "Travel",
+        "Events",
+        "Wellness",
+        "Business"
     ]
 
     var filteredTemplates: [StoryTemplate] {

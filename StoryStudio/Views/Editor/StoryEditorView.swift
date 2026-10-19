@@ -89,7 +89,7 @@ struct StoryEditorView: View {
                         Image(systemName: "dice.fill")
                         Text("Surprise")
                     }
-                    .font(.subheadline.bold())
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
                     .foregroundStyle(.purple)
                 }
             }
@@ -149,7 +149,7 @@ struct StoryEditorView: View {
                         Image(systemName: ratio.iconName)
                         Text(ratio.rawValue)
                     }
-                    .font(.caption.bold())
+                    .font(.googleSansFlex(.caption, weight: .bold))
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
                     .background(
@@ -179,7 +179,7 @@ struct StoryEditorView: View {
                         Image(systemName: tab.iconName)
                             .font(.system(size: 16, weight: .semibold))
                         Text(tab.rawValue)
-                            .font(.caption2.bold())
+                            .font(.googleSansFlex(.caption2, weight: .bold))
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
@@ -204,19 +204,19 @@ struct StoryEditorView: View {
     private var textEditingSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Headline")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
             TextField("Enter headline", text: $viewModel.title, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
 
             Text("Subtitle")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
             TextField("Enter subtitle", text: $viewModel.subtitle, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
 
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Brand / Category")
-                        .font(.caption.bold())
+                        .font(.googleSansFlex(.caption, weight: .bold))
                         .foregroundStyle(.secondary)
                     TextField("Brand Name", text: $viewModel.brandName)
                         .textFieldStyle(.roundedBorder)
@@ -224,7 +224,7 @@ struct StoryEditorView: View {
 
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Handle")
-                        .font(.caption.bold())
+                        .font(.googleSansFlex(.caption, weight: .bold))
                         .foregroundStyle(.secondary)
                     TextField("@handle", text: $viewModel.handle)
                         .textFieldStyle(.roundedBorder)
@@ -234,7 +234,7 @@ struct StoryEditorView: View {
             Divider()
 
             Text("Typography Style")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(StoryFontDesign.allCases) { font in
@@ -260,7 +260,7 @@ struct StoryEditorView: View {
 
             HStack {
                 Text("Alignment")
-                    .font(.subheadline.bold())
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
                 Spacer()
                 HStack(spacing: 8) {
                     ForEach(StoryTextAlignmentOption.allCases) { align in
@@ -284,35 +284,44 @@ struct StoryEditorView: View {
             }
 
             Divider()
+                .padding(.vertical, 4)
 
-            Text("Text Color")
-                .font(.subheadline.bold())
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(StoryColorOption.textOptions) { option in
-                        Button {
-                            viewModel.textColor = option.color
-                        } label: {
-                            VStack(spacing: 4) {
-                                Circle()
-                                    .fill(option.color)
-                                    .frame(width: 34, height: 34)
-                                    .overlay(
-                                        Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                                    )
-                                    .overlay {
-                                        if viewModel.textColor == option.color {
-                                            Circle()
-                                                .stroke(Color.purple, lineWidth: 3)
-                                                .padding(-3)
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Text Color")
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 16) {
+                        ForEach(StoryColorOption.textOptions) { option in
+                            Button {
+                                viewModel.textColor = option.color
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Circle()
+                                        .fill(option.color)
+                                        .frame(width: 36, height: 36)
+                                        .overlay(
+                                            Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                                        )
+                                        .overlay {
+                                            if viewModel.textColor == option.color {
+                                                Circle()
+                                                    .stroke(Color.purple, lineWidth: 3)
+                                                    .padding(-4)
+                                            }
                                         }
-                                    }
-                                Text(option.name)
-                                    .font(.system(size: 10))
-                                    .foregroundStyle(.secondary)
+                                    Text(option.name)
+                                        .font(.googleSansFlex(size: 10))
+                                        .foregroundStyle(.secondary)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(2)
+                                        .frame(width: 76, height: 28)
+                                }
+                                .frame(width: 76)
+                                .contentShape(Rectangle())
                             }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
                 }
             }
@@ -320,10 +329,10 @@ struct StoryEditorView: View {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Text("Title Size")
-                        .font(.subheadline.bold())
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
                     Spacer()
                     Text(String(format: "%.1fx", viewModel.titleScale))
-                        .font(.caption.monospaced())
+                        .font(.googleSansFlex(.caption).monospaced())
                         .foregroundStyle(.secondary)
                 }
                 Slider(value: $viewModel.titleScale, in: 0.7...1.5, step: 0.05)
@@ -336,7 +345,7 @@ struct StoryEditorView: View {
     private var backgroundEditingSection: some View {
         VStack(alignment: .leading, spacing: 18) {
             Text("Custom Photo Background")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
 
             HStack(spacing: 12) {
                 PhotosPicker(
@@ -348,7 +357,7 @@ struct StoryEditorView: View {
                         viewModel.backgroundImage != nil ? "Replace Photo" : "Choose from Photos",
                         systemImage: "photo.badge.plus"
                     )
-                    .font(.subheadline.bold())
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
@@ -361,7 +370,7 @@ struct StoryEditorView: View {
                         viewModel.removeBackgroundImage()
                     } label: {
                         Label("Remove", systemImage: "trash")
-                            .font(.subheadline)
+                            .font(.googleSansFlex(.subheadline))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 10)
                             .background(Color.red.opacity(0.12))
@@ -375,10 +384,10 @@ struct StoryEditorView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text("Photo Blur")
-                            .font(.subheadline.bold())
+                            .font(.googleSansFlex(.subheadline, weight: .bold))
                         Spacer()
                         Text("\(Int(viewModel.backgroundBlur)) px")
-                            .font(.caption.monospaced())
+                            .font(.googleSansFlex(.caption).monospaced())
                             .foregroundStyle(.secondary)
                     }
                     Slider(value: $viewModel.backgroundBlur, in: 0...25, step: 1)
@@ -388,10 +397,10 @@ struct StoryEditorView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text("Dark Tint Overlay")
-                            .font(.subheadline.bold())
+                            .font(.googleSansFlex(.subheadline, weight: .bold))
                         Spacer()
                         Text("\(Int(viewModel.overlayOpacity * 100))%")
-                            .font(.caption.monospaced())
+                            .font(.googleSansFlex(.caption).monospaced())
                             .foregroundStyle(.secondary)
                     }
                     Slider(value: $viewModel.overlayOpacity, in: 0...0.8, step: 0.05)
@@ -400,15 +409,61 @@ struct StoryEditorView: View {
                 Divider()
             }
 
-            Text("Gradient Palettes")
-                .font(.subheadline.bold())
+            Text("Build Your Gradient")
+                .font(.googleSansFlex(.subheadline, weight: .bold))
+
+            Text("Choose a palette or customize each color stop.")
+                .font(.googleSansFlex(.caption))
+                .foregroundStyle(.secondary)
+
+            VStack(spacing: 8) {
+                ForEach(viewModel.currentBackgroundColors.indices, id: \.self) { index in
+                    HStack(spacing: 12) {
+                        Text("Color \(index + 1)")
+                            .font(.googleSansFlex(.subheadline))
+                        Spacer()
+                        ColorPicker(
+                            "Color \(index + 1)",
+                            selection: gradientColorBinding(at: index),
+                            supportsOpacity: false
+                        )
+                        .labelsHidden()
+                        .accessibilityLabel("Gradient color \(index + 1)")
+
+                        if viewModel.currentBackgroundColors.count > 2 {
+                            Button {
+                                viewModel.removeGradientColor(at: index)
+                            } label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundStyle(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("Remove gradient color \(index + 1)")
+                        }
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Color(uiColor: .tertiarySystemGroupedBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+            }
+
+            if viewModel.currentBackgroundColors.count < 5 {
+                Button {
+                    viewModel.addGradientColor()
+                } label: {
+                    Label("Add Color Stop", systemImage: "plus.circle.fill")
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
+                        .foregroundStyle(.purple)
+                }
+                .buttonStyle(.plain)
+            }
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 14) {
                     ForEach(viewModel.backgrounds.indices, id: \.self) { index in
                         Button {
-                            viewModel.backgroundImage = nil
-                            viewModel.backgroundIndex = index
+                            viewModel.selectBackgroundPalette(at: index)
                         } label: {
                             Circle()
                                 .fill(
@@ -420,7 +475,9 @@ struct StoryEditorView: View {
                                 )
                                 .frame(width: 44, height: 44)
                                 .overlay {
-                                    if viewModel.backgroundImage == nil && viewModel.backgroundIndex == index {
+                                    if viewModel.backgroundImage == nil
+                                        && viewModel.customGradientColors == nil
+                                        && viewModel.backgroundIndex == index {
                                         Circle()
                                             .stroke(Color.primary, lineWidth: 3)
                                             .padding(-4)
@@ -435,11 +492,37 @@ struct StoryEditorView: View {
         }
     }
 
+    private func gradientColorBinding(at index: Int) -> Binding<Color> {
+        Binding(
+            get: {
+                let colors = viewModel.currentBackgroundColors
+                guard colors.indices.contains(index) else { return .purple }
+                return colors[index]
+            },
+            set: { viewModel.updateGradientColor(at: index, to: $0) }
+        )
+    }
+
     // MARK: - 3. Stickers & Badges Section
     private var stickersSection: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("Sticker & Badge Tray")
-                .font(.subheadline.bold())
+            HStack {
+                Text("Sticker & Badge Tray")
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
+
+                Spacer()
+
+                Button {
+                    viewModel.sticker = ""
+                    customStickerText = ""
+                } label: {
+                    Label("No Sticker", systemImage: "xmark.circle")
+                        .font(.googleSansFlex(.caption, weight: .bold))
+                        .foregroundStyle(viewModel.sticker.isEmpty ? .purple : .secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint("Removes the sticker from your story")
+            }
 
             // Celestial
             stickerGroup(title: "Celestial & Stars", items: ["✦", "✧", "☼", "☽", "⋆", "✪"])
@@ -457,23 +540,25 @@ struct StoryEditorView: View {
 
             // Custom Sticker Input
             Text("Custom Sticker / Emoji")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
             HStack {
                 TextField("Type emoji or text (e.g. 🔥, DREAM)", text: $customStickerText)
                     .textFieldStyle(.roundedBorder)
 
                 Button("Set") {
-                    if !customStickerText.isEmpty {
-                        viewModel.sticker = customStickerText
-                        customStickerText = ""
-                    }
+                    let sticker = customStickerText.trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard !sticker.isEmpty else { return }
+                    viewModel.sticker = sticker
+                    customStickerText = ""
                 }
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(Color.purple)
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .disabled(customStickerText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .opacity(customStickerText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.5 : 1)
             }
         }
     }
@@ -481,14 +566,14 @@ struct StoryEditorView: View {
     private func stickerGroup(title: String, items: [String]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.caption.bold())
+                .font(.googleSansFlex(.caption, weight: .bold))
                 .foregroundStyle(.secondary)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(items, id: \.self) { item in
                         Button {
-                            viewModel.sticker = item
+                            viewModel.sticker = viewModel.sticker == item ? "" : item
                         } label: {
                             Text(item)
                                 .font(item.count > 2 ? .caption.bold() : .title3)
@@ -517,7 +602,7 @@ struct StoryEditorView: View {
     private var styleSection: some View {
         VStack(alignment: .leading, spacing: 18) {
             Text("Aesthetic Frame Style")
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
 
             HStack(spacing: 12) {
                 ForEach(StoryFrameStyle.allCases) { style in
@@ -528,7 +613,7 @@ struct StoryEditorView: View {
                             Image(systemName: style.iconName)
                                 .font(.system(size: 20))
                             Text(style.rawValue)
-                                .font(.caption2.bold())
+                                .font(.googleSansFlex(.caption2, weight: .bold))
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
@@ -549,9 +634,9 @@ struct StoryEditorView: View {
             Toggle(isOn: $viewModel.showVignette) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Vintage Vignette")
-                        .font(.subheadline.bold())
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
                     Text("Adds cinematic darkened edges")
-                        .font(.caption)
+                        .font(.googleSansFlex(.caption))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -568,7 +653,7 @@ struct StoryEditorView: View {
                     viewModel.saveToCreations()
                 } label: {
                     Label("Save to Studio", systemImage: "folder.badge.plus")
-                        .font(.headline)
+                        .font(.googleSansFlex(.headline))
                         .foregroundStyle(.purple)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
@@ -581,7 +666,7 @@ struct StoryEditorView: View {
                     viewModel.saveToPhotoLibrary()
                 } label: {
                     Label("Save to Photos", systemImage: "arrow.down.to.line.circle.fill")
-                        .font(.headline)
+                        .font(.googleSansFlex(.headline))
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
@@ -595,7 +680,7 @@ struct StoryEditorView: View {
                 viewModel.exportStory()
             } label: {
                 Label("Export & Share PNG", systemImage: "square.and.arrow.up.fill")
-                    .font(.headline)
+                    .font(.googleSansFlex(.headline))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
@@ -606,7 +691,7 @@ struct StoryEditorView: View {
             if let url = viewModel.exportedURL {
                 ShareLink(item: url) {
                     Label("Tap here to send via AirDrop / Messages", systemImage: "paperplane.fill")
-                        .font(.subheadline.bold())
+                        .font(.googleSansFlex(.subheadline, weight: .bold))
                         .foregroundStyle(.purple)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)

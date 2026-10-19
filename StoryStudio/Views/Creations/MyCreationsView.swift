@@ -61,10 +61,10 @@ struct MyCreationsView: View {
                 .padding(.top, 60)
 
             Text("No Stories Saved Yet")
-                .font(.title2.bold())
+                .font(.googleSansFlex(.title2, weight: .bold))
 
             Text("Designs you create and save from the editor will appear here. You can re-edit, duplicate, or export them anytime.")
-                .font(.subheadline)
+                .font(.googleSansFlex(.subheadline))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
@@ -77,7 +77,7 @@ struct MyCreationsView: View {
                 )
             } label: {
                 Label("Create First Story", systemImage: "plus.circle.fill")
-                    .font(.headline)
+                    .font(.googleSansFlex(.headline))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 24)
                     .padding(.vertical, 14)
@@ -93,7 +93,7 @@ struct MyCreationsView: View {
     private var creationsGrid: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text("\(creationsManager.savedStories.count) Saved \(creationsManager.savedStories.count == 1 ? "Design" : "Designs")")
-                .font(.subheadline)
+                .font(.googleSansFlex(.subheadline))
                 .foregroundStyle(.secondary)
 
             LazyVGrid(columns: columns, spacing: 16) {
@@ -151,12 +151,12 @@ struct MyCreationsView: View {
 
                         // Meta details
                         Text(story.title.replacingOccurrences(of: "\n", with: " "))
-                            .font(.subheadline.bold())
+                            .font(.googleSansFlex(.subheadline, weight: .bold))
                             .lineLimit(1)
 
                         HStack {
                             Text(story.createdAt.formatted(date: .abbreviated, time: .omitted))
-                                .font(.caption2)
+                                .font(.googleSansFlex(.caption2))
                                 .foregroundStyle(.secondary)
 
                             Spacer()
@@ -182,7 +182,7 @@ struct MyCreationsView: View {
                                 }
                             } label: {
                                 Image(systemName: "ellipsis")
-                                    .font(.caption)
+                                    .font(.googleSansFlex(.caption))
                                     .foregroundStyle(.secondary)
                                     .padding(4)
                             }

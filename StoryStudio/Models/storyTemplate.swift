@@ -146,6 +146,118 @@ struct StoryTemplate: Identifiable {
             subtitle: "A mindful checkpoint for your day.",
             sticker: "𑁍",
             isFavorite: false
+        ),
+        StoryTemplate(
+            id: "coffee_launch",
+            name: "Sunday Coffee",
+            category: "Food & Drink",
+            colors: [
+                Color(red: 0.29, green: 0.16, blue: 0.12),
+                Color(red: 0.72, green: 0.40, blue: 0.23),
+                Color(red: 0.93, green: 0.72, blue: 0.45)
+            ],
+            title: "A SLOW\nMORNING",
+            subtitle: "Your new favorite cup is waiting.",
+            sticker: "☕",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "coastal_escape",
+            name: "Coastal Escape",
+            category: "Travel",
+            colors: [
+                Color(red: 0.08, green: 0.52, blue: 0.67),
+                Color(red: 0.25, green: 0.76, blue: 0.78),
+                Color(red: 0.93, green: 0.81, blue: 0.62)
+            ],
+            title: "FIND YOUR\nBLUE",
+            subtitle: "A little getaway goes a long way.",
+            sticker: "☼",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "live_tonight",
+            name: "Live Tonight",
+            category: "Events",
+            colors: [
+                Color(red: 0.16, green: 0.09, blue: 0.31),
+                Color(red: 0.55, green: 0.13, blue: 0.52),
+                Color(red: 0.96, green: 0.30, blue: 0.49)
+            ],
+            title: "TONIGHT\nWE GLOW",
+            subtitle: "Doors open at 8 · See you there.",
+            sticker: "✦",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "new_arrivals",
+            name: "New Arrivals",
+            category: "Promotions",
+            colors: [
+                Color(red: 0.90, green: 0.44, blue: 0.36),
+                Color(red: 0.72, green: 0.20, blue: 0.34),
+                Color(red: 0.39, green: 0.12, blue: 0.28)
+            ],
+            title: "THE NEW\nEDIT",
+            subtitle: "Fresh finds, just added to the collection.",
+            sticker: "NEW",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "wellness_reset",
+            name: "Daily Reset",
+            category: "Wellness",
+            colors: [
+                Color(red: 0.75, green: 0.83, blue: 0.70),
+                Color(red: 0.37, green: 0.59, blue: 0.49),
+                Color(red: 0.15, green: 0.39, blue: 0.37)
+            ],
+            title: "PAUSE.\nBREATHE.",
+            subtitle: "Make a little room for yourself today.",
+            sticker: "✿",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "creative_studio",
+            name: "Studio Notes",
+            category: "Business",
+            colors: [
+                Color(red: 0.15, green: 0.23, blue: 0.48),
+                Color(red: 0.29, green: 0.45, blue: 0.77),
+                Color(red: 0.59, green: 0.72, blue: 0.92)
+            ],
+            title: "MADE WITH\nINTENTION",
+            subtitle: "A peek behind the creative process.",
+            sticker: "✎",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "weekend_market",
+            name: "Weekend Market",
+            category: "Food & Drink",
+            colors: [
+                Color(red: 0.92, green: 0.67, blue: 0.28),
+                Color(red: 0.85, green: 0.37, blue: 0.26),
+                Color(red: 0.53, green: 0.20, blue: 0.24)
+            ],
+            title: "FRESH FROM\nTHE MARKET",
+            subtitle: "Local favorites for your weekend table.",
+            sticker: "✿",
+            isFavorite: false
+        ),
+        StoryTemplate(
+            id: "city_break",
+            name: "City Break",
+            category: "Travel",
+            colors: [
+                Color(red: 0.12, green: 0.22, blue: 0.33),
+                Color(red: 0.25, green: 0.43, blue: 0.54),
+                Color(red: 0.91, green: 0.52, blue: 0.34)
+            ],
+            title: "TAKE THE\nSCENIC ROUTE",
+            subtitle: "Somewhere new is closer than you think.",
+            sticker: "↗",
+            isFavorite: false
         )
     ]
 }

@@ -68,14 +68,14 @@ struct InspirationView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Image(systemName: "lightbulb.fill")
-                                .font(.title2)
+                                .font(.googleSansFlex(.title2))
                                 .foregroundStyle(.yellow)
                             Text("Daily Studio Inspiration")
-                                .font(.headline)
+                                .font(.googleSansFlex(.headline))
                         }
 
                         Text("Fresh ideas, curated quotes, and color schemes to spark your next viral story.")
-                            .font(.subheadline)
+                            .font(.googleSansFlex(.subheadline))
                             .foregroundStyle(.secondary)
                     }
                     .padding(18)
@@ -86,7 +86,7 @@ struct InspirationView: View {
                     // Quotes Carousel / Cards
                     VStack(alignment: .leading, spacing: 14) {
                         Text("Quote of the Day")
-                            .font(.title3.bold())
+                            .font(.googleSansFlex(.title3, weight: .bold))
 
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
@@ -94,7 +94,7 @@ struct InspirationView: View {
                                     VStack(alignment: .leading, spacing: 14) {
                                         HStack {
                                             Text(item.category.uppercased())
-                                                .font(.caption2.bold())
+                                                .font(.googleSansFlex(.caption2, weight: .bold))
                                                 .padding(.horizontal, 8)
                                                 .padding(.vertical, 4)
                                                 .background(Color.white.opacity(0.25))
@@ -103,17 +103,17 @@ struct InspirationView: View {
                                             Spacer()
 
                                             Text(item.sticker)
-                                                .font(.headline)
+                                                .font(.googleSansFlex(.headline))
                                         }
 
                                         Text("\"\(item.quote)\"")
-                                            .font(.headline)
+                                            .font(.googleSansFlex(.headline))
                                             .multilineTextAlignment(.leading)
                                             .lineLimit(4)
                                             .fixedSize(horizontal: false, vertical: true)
 
                                         Text("— \(item.author)")
-                                            .font(.caption)
+                                            .font(.googleSansFlex(.caption))
                                             .opacity(0.85)
 
                                         Spacer()
@@ -134,7 +134,7 @@ struct InspirationView: View {
                                                 Text("Create with Quote")
                                                 Image(systemName: "arrow.right.circle.fill")
                                             }
-                                            .font(.subheadline.bold())
+                                            .font(.googleSansFlex(.subheadline, weight: .bold))
                                             .foregroundStyle(item.colors.first ?? .black)
                                             .frame(maxWidth: .infinity)
                                             .padding(.vertical, 10)
@@ -164,7 +164,7 @@ struct InspirationView: View {
                     // Curated Color Palettes
                     VStack(alignment: .leading, spacing: 14) {
                         Text("Trending Color Palettes")
-                            .font(.title3.bold())
+                            .font(.googleSansFlex(.title3, weight: .bold))
 
                         ForEach(paletteSuggestions, id: \.1) { palette in
                             HStack(spacing: 14) {
@@ -180,9 +180,9 @@ struct InspirationView: View {
 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(palette.1)
-                                        .font(.subheadline.bold())
+                                        .font(.googleSansFlex(.subheadline, weight: .bold))
                                     Text("\(palette.0.count) harmonious gradient tones")
-                                        .font(.caption)
+                                        .font(.googleSansFlex(.caption))
                                         .foregroundStyle(.secondary)
                                 }
 
@@ -201,7 +201,7 @@ struct InspirationView: View {
                                     )
                                 } label: {
                                     Text("Use")
-                                        .font(.subheadline.bold())
+                                        .font(.googleSansFlex(.subheadline, weight: .bold))
                                         .foregroundStyle(.purple)
                                         .padding(.horizontal, 14)
                                         .padding(.vertical, 8)
@@ -218,7 +218,7 @@ struct InspirationView: View {
                     // Best practices / Tips card
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Story Creator Tips")
-                            .font(.headline)
+                            .font(.googleSansFlex(.headline))
 
                         tipRow(icon: "text.aligncenter", tip: "Keep headlines under 5 words for instant readability.")
                         tipRow(icon: "photo.fill", tip: "Use blur on busy photos so viewers focus on your message.")
@@ -249,7 +249,7 @@ struct InspirationView: View {
                 .foregroundStyle(.purple)
                 .frame(width: 22)
             Text(tip)
-                .font(.subheadline)
+                .font(.googleSansFlex(.subheadline))
                 .foregroundStyle(.secondary)
         }
     }

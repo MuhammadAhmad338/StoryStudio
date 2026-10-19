@@ -1,27 +1,29 @@
 import SwiftUI
 
 extension Font {
-    // Google Sans Flex font extension
-    // To use Google Sans Flex:
-    // 1. Download Google Sans Flex font files (.ttf or .otf)
-    // 2. Add them to the project in Assets.xcassets or directly in the StoryStudio folder
-    // 3. Add "Fonts provided by application" key to Info.plist with font filenames
-    // 4. Replace the system font below with: .custom("GoogleSansFlex-Regular", size: size)
-
     static func googleSansFlex(size: CGFloat, weight: Font.Weight = .regular) -> Font {
-        // Using system font as placeholder - replace with custom font once added
-        switch weight {
-        case .bold:
-            return .system(size: size, weight: .bold, design: .rounded)
-        case .semibold:
-            return .system(size: size, weight: .semibold, design: .rounded)
-        case .medium:
-            return .system(size: size, weight: .medium, design: .rounded)
-        case .light:
-            return .system(size: size, weight: .light, design: .rounded)
-        default:
-            return .system(size: size, weight: .regular, design: .rounded)
+        .custom("GoogleSansFlex-Regular", size: size).weight(weight)
+    }
+
+    static func googleSansFlex(_ textStyle: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
+        let size: CGFloat
+        switch textStyle {
+        case .largeTitle: size = 34
+        case .title: size = 28
+        case .title2: size = 22
+        case .title3: size = 20
+        case .headline: size = 17
+        case .subheadline: size = 15
+        case .body: size = 17
+        case .callout: size = 16
+        case .footnote: size = 13
+        case .caption: size = 12
+        case .caption2: size = 11
+        @unknown default: size = 17
         }
+
+        let styleWeight: Font.Weight = textStyle == .headline ? .semibold : weight
+        return .custom("GoogleSansFlex-Regular", size: size, relativeTo: textStyle).weight(styleWeight)
     }
 
     static let googleSansFlexLargeTitle = googleSansFlex(size: 34, weight: .bold)

@@ -35,12 +35,12 @@ struct TemplateCardView: View {
             }
 
             Text(template.name)
-                .font(.subheadline.bold())
+                .font(.googleSansFlex(.subheadline, weight: .bold))
                 .foregroundStyle(.primary)
                 .lineLimit(1)
 
             Text(template.category)
-                .font(.caption)
+                .font(.googleSansFlex(.caption))
                 .foregroundStyle(.secondary)
         }
     }
