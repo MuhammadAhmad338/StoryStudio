@@ -306,6 +306,42 @@ final class StoryEditorViewModel: ObservableObject {
 
         let renderer = ImageRenderer(content: canvas)
         renderer.scale = 1.0
-        return renderer.uiImage
+        guard let image = renderer.uiImage else { return nil }
+
+        // Add watermark for free users
+        if !SubscriptionManager.shared.hasProAccess {
+            return addWatermark(to: image)
+        }
+
+        return image
+    }
+
+    private func addWatermark(to image: UIImage) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+
+        let watermarkText = "StoryStudio"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 24, weight: .medium),
+            .foregroundColor: UIColor.white.withAlphaComponent(0.5)
+        ]
+
+        let textSize = watermarkText.size(withAttributes: attributes)
+        let padding: CGFloat = 20
+        let watermarkRect = CGRect(
+            x: image.size.width - textSize.width - padding,
+            y: image.size.height - textSize.height - padding,
+            width: textSize.width,
+            height: textSize.height
+        )
+
+        watermarkText.draw(in: watermarkRect, withAttributes: attributes)
+
+        let watermarkedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return watermarkedImage
     }
 }

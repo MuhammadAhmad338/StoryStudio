@@ -127,7 +127,8 @@ struct InspirationView: View {
                                                 title: item.quote.uppercased(),
                                                 subtitle: "— \(item.author)",
                                                 sticker: item.sticker,
-                                                isFavorite: false
+                                                isFavorite: false,
+                                                isPremium: false
                                             )
                                         } label: {
                                             HStack {
@@ -197,7 +198,8 @@ struct InspirationView: View {
                                         title: "YOUR STORY",
                                         subtitle: "Designed with \(palette.1)",
                                         sticker: "✦",
-                                        isFavorite: false
+                                        isFavorite: false,
+                                        isPremium: false
                                     )
                                 } label: {
                                     Text("Use")

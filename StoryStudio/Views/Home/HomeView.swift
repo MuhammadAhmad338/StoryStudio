@@ -3,11 +3,13 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @ObservedObject private var creationsManager = CreationsManager.shared
+    @ObservedObject private var subscriptionManager = SubscriptionManager.shared
     @Binding var selectedTemplate: StoryTemplate?
     @State private var searchText = ""
     @State private var showFavoritesOnly = false
     @State private var isDarkMode = false
     @State private var openBlankCanvas = false
+    @State private var showSubscriptionSheet = false
 
     init(selectedTemplate: Binding<StoryTemplate?> = .constant(nil)) {
         self._selectedTemplate = selectedTemplate
@@ -139,16 +141,30 @@ struct HomeView: View {
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(displayedTemplates) { template in
                             Button {
-                                selectedTemplate = template
-                            } label: {
-                                TemplateCardView(template: template) {
-                                    viewModel.toggleFavorite(template: template)
+                                if template.isPremium && !subscriptionManager.hasProAccess {
+                                    showSubscriptionSheet = true
+                                } else {
+                                    selectedTemplate = template
                                 }
+                            } label: {
+                                TemplateCardView(
+                                    template: template,
+                                    onToggleFavorite: {
+                                        viewModel.toggleFavorite(template: template)
+                                    },
+                                    onUpgrade: {
+                                        showSubscriptionSheet = true
+                                    }
+                                )
                             }
                             .buttonStyle(.plain)
                             .contextMenu {
                                 Button {
-                                    selectedTemplate = template
+                                    if template.isPremium && !subscriptionManager.hasProAccess {
+                                        showSubscriptionSheet = true
+                                    } else {
+                                        selectedTemplate = template
+                                    }
                                 } label: {
                                     Label("Open in Editor", systemImage: "paintbrush")
                                 }
@@ -198,6 +214,9 @@ struct HomeView: View {
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationDestination(isPresented: $openBlankCanvas) {
             StoryEditorView()
+        }
+        .sheet(isPresented: $showSubscriptionSheet) {
+            SubscriptionView()
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }

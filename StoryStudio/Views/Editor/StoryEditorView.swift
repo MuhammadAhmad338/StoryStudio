@@ -6,6 +6,8 @@ struct StoryEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selectedTab: EditorTab = .text
     @State private var customStickerText: String = ""
+    @State private var showSubscriptionSheet = false
+    @ObservedObject private var subscriptionManager = SubscriptionManager.shared
 
     enum EditorTab: String, CaseIterable, Identifiable {
         case text = "Typography"
@@ -105,6 +107,9 @@ struct StoryEditorView: View {
         } message: {
             Text(viewModel.errorMessage ?? viewModel.successMessage ?? "")
         }
+        .sheet(isPresented: $showSubscriptionSheet) {
+            SubscriptionView()
+        }
     }
 
     // MARK: - Canvas Preview
@@ -141,24 +146,37 @@ struct StoryEditorView: View {
         HStack(spacing: 12) {
             ForEach(StoryAspectRatio.allCases) { ratio in
                 Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
-                        viewModel.aspectRatio = ratio
+                    if !subscriptionManager.hasProAccess && ratio != .story9x16 {
+                        showSubscriptionSheet = true
+                    } else {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                            viewModel.aspectRatio = ratio
+                        }
                     }
                 } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: ratio.iconName)
-                        Text(ratio.rawValue)
+                    ZStack {
+                        HStack(spacing: 6) {
+                            Image(systemName: ratio.iconName)
+                            Text(ratio.rawValue)
+                        }
+                        .font(.googleSansFlex(.caption, weight: .bold))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            viewModel.aspectRatio == ratio
+                                ? Color.purple
+                                : Color(uiColor: .secondarySystemGroupedBackground)
+                        )
+                        .foregroundStyle(viewModel.aspectRatio == ratio ? .white : .primary)
+                        .clipShape(Capsule())
+
+                        if !subscriptionManager.hasProAccess && ratio != .story9x16 {
+                            Image(systemName: "lock.fill")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .offset(x: 8, y: -6)
+                        }
                     }
-                    .font(.googleSansFlex(.caption, weight: .bold))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(
-                        viewModel.aspectRatio == ratio
-                            ? Color.purple
-                            : Color(uiColor: .secondarySystemGroupedBackground)
-                    )
-                    .foregroundStyle(viewModel.aspectRatio == ratio ? .white : .primary)
-                    .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)
             }
@@ -386,12 +404,20 @@ struct StoryEditorView: View {
                         Text("Photo Blur")
                             .font(.googleSansFlex(.subheadline, weight: .bold))
                         Spacer()
-                        Text("\(Int(viewModel.backgroundBlur)) px")
-                            .font(.googleSansFlex(.caption).monospaced())
-                            .foregroundStyle(.secondary)
+                        HStack(spacing: 4) {
+                            Text("\(Int(viewModel.backgroundBlur)) px")
+                                .font(.googleSansFlex(.caption).monospaced())
+                                .foregroundStyle(.secondary)
+                            if !subscriptionManager.hasProAccess {
+                                Image(systemName: "lock.fill")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                     }
                     Slider(value: $viewModel.backgroundBlur, in: 0...25, step: 1)
                         .tint(.purple)
+                        .disabled(!subscriptionManager.hasProAccess)
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -399,12 +425,20 @@ struct StoryEditorView: View {
                         Text("Dark Tint Overlay")
                             .font(.googleSansFlex(.subheadline, weight: .bold))
                         Spacer()
-                        Text("\(Int(viewModel.overlayOpacity * 100))%")
-                            .font(.googleSansFlex(.caption).monospaced())
-                            .foregroundStyle(.secondary)
+                        HStack(spacing: 4) {
+                            Text("\(Int(viewModel.overlayOpacity * 100))%")
+                                .font(.googleSansFlex(.caption).monospaced())
+                                .foregroundStyle(.secondary)
+                            if !subscriptionManager.hasProAccess {
+                                Image(systemName: "lock.fill")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                     }
                     Slider(value: $viewModel.overlayOpacity, in: 0...0.8, step: 0.05)
                         .tint(.purple)
+                        .disabled(!subscriptionManager.hasProAccess)
                 }
                 Divider()
             }

@@ -4,6 +4,7 @@ struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var selectedTemplate: StoryTemplate? = nil
     @ObservedObject private var creationsManager = CreationsManager.shared
+    @ObservedObject private var subscriptionManager = SubscriptionManager.shared
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -35,6 +36,12 @@ struct MainTabView: View {
                     Label("Inspiration", systemImage: "lightbulb.fill")
                 }
                 .tag(2)
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(3)
         }
         .tint(.purple)
     }

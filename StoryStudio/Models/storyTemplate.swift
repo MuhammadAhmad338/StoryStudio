@@ -9,6 +9,7 @@ struct StoryTemplate: Identifiable {
     let subtitle: String
     let sticker: String
     var isFavorite: Bool
+    let isPremium: Bool
 
     static let samples: [StoryTemplate] = [
         StoryTemplate(
@@ -19,7 +20,8 @@ struct StoryTemplate: Identifiable {
             title: "MAKE TODAY\nBEAUTIFUL",
             subtitle: "A little reminder to enjoy the moment.",
             sticker: "✦",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "minimal",
@@ -32,7 +34,8 @@ struct StoryTemplate: Identifiable {
             title: "LESS NOISE.\nMORE LIFE.",
             subtitle: "Find beauty in the simple things.",
             sticker: "✳",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "ocean",
@@ -42,7 +45,8 @@ struct StoryTemplate: Identifiable {
             title: "A FRESH\nNEW START",
             subtitle: "New ideas. New energy.",
             sticker: "✧",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "midnight",
@@ -52,7 +56,8 @@ struct StoryTemplate: Identifiable {
             title: "SOMETHING\nGOOD IS HERE",
             subtitle: "Stay tuned for what's coming next.",
             sticker: "✦",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "forest",
@@ -62,7 +67,8 @@ struct StoryTemplate: Identifiable {
             title: "GROW\nEVERYDAY",
             subtitle: "Nature's beauty in every story.",
             sticker: "❋",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "rose",
@@ -72,7 +78,8 @@ struct StoryTemplate: Identifiable {
             title: "LIVE YOUR\nBEST LIFE",
             subtitle: "Embrace every vibrant moment.",
             sticker: "♡",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "aurora",
@@ -82,7 +89,8 @@ struct StoryTemplate: Identifiable {
             title: "DREAM\nBIG",
             subtitle: "Your journey starts here.",
             sticker: "☼",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "sunset2",
@@ -92,7 +100,8 @@ struct StoryTemplate: Identifiable {
             title: "CHASE\nTHE SUN",
             subtitle: "Capture the golden moments.",
             sticker: "✦",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "cyberpunk",
@@ -106,7 +115,8 @@ struct StoryTemplate: Identifiable {
             title: "FUTURE IS\nLOADING...",
             subtitle: "Next-gen creative drops tonight.",
             sticker: "⚡",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "vintage_paper",
@@ -119,7 +129,8 @@ struct StoryTemplate: Identifiable {
             title: "THE POWER OF\nSTILLNESS",
             subtitle: "In silence, answers find you.",
             sticker: "❦",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "flash_drop",
@@ -132,7 +143,8 @@ struct StoryTemplate: Identifiable {
             title: "LIMITED\nEDITION",
             subtitle: "Available for the next 24 hours.",
             sticker: "SALE",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "zen_wellness",
@@ -145,7 +157,8 @@ struct StoryTemplate: Identifiable {
             title: "INHALE PEACE\nEXHALE CHAOS",
             subtitle: "A mindful checkpoint for your day.",
             sticker: "𑁍",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "coffee_launch",
@@ -159,7 +172,8 @@ struct StoryTemplate: Identifiable {
             title: "A SLOW\nMORNING",
             subtitle: "Your new favorite cup is waiting.",
             sticker: "☕",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "coastal_escape",
@@ -173,7 +187,8 @@ struct StoryTemplate: Identifiable {
             title: "FIND YOUR\nBLUE",
             subtitle: "A little getaway goes a long way.",
             sticker: "☼",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "live_tonight",
@@ -187,7 +202,8 @@ struct StoryTemplate: Identifiable {
             title: "TONIGHT\nWE GLOW",
             subtitle: "Doors open at 8 · See you there.",
             sticker: "✦",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "new_arrivals",
@@ -201,7 +217,8 @@ struct StoryTemplate: Identifiable {
             title: "THE NEW\nEDIT",
             subtitle: "Fresh finds, just added to the collection.",
             sticker: "NEW",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "wellness_reset",
@@ -215,7 +232,8 @@ struct StoryTemplate: Identifiable {
             title: "PAUSE.\nBREATHE.",
             subtitle: "Make a little room for yourself today.",
             sticker: "✿",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "creative_studio",
@@ -229,7 +247,8 @@ struct StoryTemplate: Identifiable {
             title: "MADE WITH\nINTENTION",
             subtitle: "A peek behind the creative process.",
             sticker: "✎",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "weekend_market",
@@ -243,7 +262,8 @@ struct StoryTemplate: Identifiable {
             title: "FRESH FROM\nTHE MARKET",
             subtitle: "Local favorites for your weekend table.",
             sticker: "✿",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
         ),
         StoryTemplate(
             id: "city_break",
@@ -257,7 +277,83 @@ struct StoryTemplate: Identifiable {
             title: "TAKE THE\nSCENIC ROUTE",
             subtitle: "Somewhere new is closer than you think.",
             sticker: "↗",
-            isFavorite: false
+            isFavorite: false,
+            isPremium: false
+        ),
+        StoryTemplate(
+            id: "premium_dreamy",
+            name: "Dreamy Sunset",
+            category: "Lifestyle",
+            colors: [
+                Color(red: 0.98, green: 0.5, blue: 0.6),
+                Color(red: 0.8, green: 0.3, blue: 0.5),
+                Color(red: 0.6, green: 0.2, blue: 0.4)
+            ],
+            title: "CHASING\nDREAMS",
+            subtitle: "Where the sky meets your imagination.",
+            sticker: "✨",
+            isFavorite: false,
+            isPremium: true
+        ),
+        StoryTemplate(
+            id: "premium_neon",
+            name: "Neon Dreams",
+            category: "Tech",
+            colors: [
+                Color(red: 0.1, green: 0.0, blue: 0.2),
+                Color(red: 0.8, green: 0.0, blue: 0.8),
+                Color(red: 0.0, green: 0.8, blue: 1.0)
+            ],
+            title: "NEON\nNIGHTS",
+            subtitle: "Electric vibes only.",
+            sticker: "⚡",
+            isFavorite: false,
+            isPremium: true
+        ),
+        StoryTemplate(
+            id: "premium_gold",
+            name: "Golden Luxury",
+            category: "Promotions",
+            colors: [
+                Color(red: 0.9, green: 0.7, blue: 0.2),
+                Color(red: 0.6, green: 0.4, blue: 0.1),
+                Color(red: 0.3, green: 0.2, blue: 0.05)
+            ],
+            title: "PURE\nLUXURY",
+            subtitle: "Elevate your brand presence.",
+            sticker: "👑",
+            isFavorite: false,
+            isPremium: true
+        ),
+        StoryTemplate(
+            id: "premium_cyber",
+            name: "Cyber Future",
+            category: "Tech",
+            colors: [
+                Color(red: 0.0, green: 0.1, blue: 0.2),
+                Color(red: 0.0, green: 0.8, blue: 0.6),
+                Color(red: 0.8, green: 0.0, blue: 0.4)
+            ],
+            title: "DIGITAL\nREVOLUTION",
+            subtitle: "Tomorrow is now.",
+            sticker: "🔮",
+            isFavorite: false,
+            isPremium: true
+        ),
+        StoryTemplate(
+            id: "premium_rose",
+            name: "Velvet Rose",
+            category: "Lifestyle",
+            colors: [
+                Color(red: 0.8, green: 0.2, blue: 0.3),
+                Color(red: 0.6, green: 0.1, blue: 0.2),
+                Color(red: 0.4, green: 0.05, blue: 0.1)
+            ],
+            title: "ELEGANCE\nREDEFINED",
+            subtitle: "Beauty in every detail.",
+            sticker: "🌹",
+            isFavorite: false,
+            isPremium: true
         )
     ]
 }

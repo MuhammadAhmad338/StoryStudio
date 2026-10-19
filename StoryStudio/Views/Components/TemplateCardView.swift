@@ -3,6 +3,8 @@ import SwiftUI
 struct TemplateCardView: View {
     let template: StoryTemplate
     var onToggleFavorite: (() -> Void)? = nil
+    var onUpgrade: (() -> Void)? = nil
+    @ObservedObject private var subscriptionManager = SubscriptionManager.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -16,6 +18,11 @@ struct TemplateCardView: View {
                 .aspectRatio(9.0 / 16.0, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .shadow(color: Color.black.opacity(0.12), radius: 8, x: 0, y: 4)
+
+                if template.isPremium && !subscriptionManager.hasProAccess {
+                    LockOverlay()
+                        .frame(width: 80, height: 80)
+                }
 
                 Button {
                     let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -31,13 +38,22 @@ struct TemplateCardView: View {
                                 .fill(Color.black.opacity(0.45))
                         )
                 }
+                .buttonStyle(.plain)
                 .padding(8)
             }
 
-            Text(template.name)
-                .font(.googleSansFlex(.subheadline, weight: .bold))
-                .foregroundStyle(.primary)
-                .lineLimit(1)
+            HStack {
+                Text(template.name)
+                    .font(.googleSansFlex(.subheadline, weight: .bold))
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+
+                Spacer()
+
+                if template.isPremium {
+                    PremiumBadge()
+                }
+            }
 
             Text(template.category)
                 .font(.googleSansFlex(.caption))

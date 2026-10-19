@@ -27,7 +27,7 @@ struct OverviewView: View {
                     FeatureCard(
                         icon: "rectangle.stack.fill",
                         title: "Template Library",
-                        description: "Choose from multiple pre-designed templates across categories"
+                        description: "Choose from 18 pre-designed templates across categories"
                     )
 
                     FeatureCard(
@@ -39,13 +39,13 @@ struct OverviewView: View {
                     FeatureCard(
                         icon: "paintpalette.fill",
                         title: "Gradient Backgrounds",
-                        description: "Select from 5 beautiful gradient color schemes"
+                        description: "Select from 10 beautiful gradient color schemes"
                     )
 
                     FeatureCard(
-                        icon: "sparkles",
-                        title: "Decorative Stickers",
-                        description: "Add decorative stickers to enhance your stories"
+                        icon: "paintbrush",
+                        title: "Custom Gradients",
+                        description: "Create your own custom gradient backgrounds"
                     )
 
                     FeatureCard(
@@ -55,9 +55,9 @@ struct OverviewView: View {
                     )
 
                     FeatureCard(
-                        icon: "paperplane.fill",
-                        title: "Share Directly",
-                        description: "Share your creations instantly from the app"
+                        icon: "heart.fill",
+                        title: "Save & Organize",
+                        description: "Save your creations and access them anytime"
                     )
                 }
                 .padding(.horizontal, 20)
